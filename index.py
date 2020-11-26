@@ -7,6 +7,7 @@ def handler(event, context):
         'output': 'Hello World',
         'timestamp': datetime.datetime.utcnow().isoformat()
     }
+    print("Hello")
     return {'statusCode': 200,
             'body': json.dumps(data),
             'headers': {'Content-Type': 'application/json'}}
