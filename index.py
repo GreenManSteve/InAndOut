@@ -15,14 +15,14 @@ def handler(event, context):
         if isclass(_type) and issubclass(_type, patient.AbsPatient):
             humans.update([[name, _type]])
 
-    body = event['data']
-    sex = str(body['sex']).lower().capitalize()
-    age = body['age']
-    total_cholesterol = body['total_cholesterol']
-    smoker = body['smoker']
-    hdl_cholesterol = body['hdl_cholesterol']
-    systolic_blood_pressure = body['systolic_blood_pressure']
-    email = body['email']
+
+    sex = str(event['sex']).lower().capitalize()
+    age = event['age']
+    total_cholesterol = event['total_cholesterol']
+    smoker = event['smoker']
+    hdl_cholesterol = event['hdl_cholesterol']
+    systolic_blood_pressure = event['systolic_blood_pressure']
+    email = event['email']
 
     if sex in humans:
         human = humans[sex](age, total_cholesterol, smoker, hdl_cholesterol, systolic_blood_pressure, email)
