@@ -54,5 +54,4 @@ class Email(object):
         # Display an error if something goes wrong.
         except ClientError as e:
             print(e.response['Error']['Message'])
-        finally:
-            print("Email sent! Message ID:"),
+

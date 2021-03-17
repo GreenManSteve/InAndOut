@@ -28,8 +28,7 @@ def handler(event, context):
         result = screening.calculate_framingham()
     else:
         null_class = NullClass(sex)
-        result = Screening(null_class)
-
+        result = null_class.calculate_framingham()
     return {'statusCode': 200,
             'body': json.dumps(result),
             'headers': {'Content-Type': 'application/json'}
