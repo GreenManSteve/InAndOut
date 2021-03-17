@@ -47,3 +47,7 @@ class AbsPatient(metaclass=abc.ABCMeta):
     @property
     def total_cholesterol(self):
         return self._total_cholesterol
+
+    @property
+    def score_risk(self):
+        return self._score_risk
