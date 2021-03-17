@@ -72,7 +72,7 @@ class AbsPatient(metaclass=abc.ABCMeta):
 
     @property
     def score_risk(self):
-        return self._score_risk
+        return self._score
 
     @property
     def email(self):

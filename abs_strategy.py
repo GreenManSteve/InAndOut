@@ -4,4 +4,5 @@ class Screening(object):
         self._person = person
 
     def calculate_framingham(self):
-        return self._person.calculate_framingham()
+        self._person.calculate_framingham()
+        return self._person.score_risk

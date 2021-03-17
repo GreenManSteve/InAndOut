@@ -7,7 +7,6 @@ import patient
 
 def handler(event, context):
     humans = {}
-
     class_list = getmembers(patient,
                             lambda m: isclass(m) and not isabstract(m))
 
@@ -26,11 +25,12 @@ def handler(event, context):
     if sex in humans:
         human = humans[sex](age, total_cholesterol, smoker, hdl_cholesterol, systolic_blood_pressure, email)
         screening = Screening(human)
+        result = screening.calculate_framingham()
     else:
         null_class = NullClass(sex)
-        screening = Screening(null_class)
+        result = Screening(null_class)
 
     return {'statusCode': 200,
-            'body': json.dumps(screening.calculate_framingham()),
+            'body': json.dumps(result),
             'headers': {'Content-Type': 'application/json'}
             }
