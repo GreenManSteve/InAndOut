@@ -1,4 +1,5 @@
 import abc
+from .email import Email as email
 
 
 class AbsPatient(metaclass=abc.ABCMeta):
@@ -11,6 +12,23 @@ class AbsPatient(metaclass=abc.ABCMeta):
         self._hdl_cholesterol = hdl_cholesterol
         self._systolic_blood_pressure = systolic_blood_pressure
         self._email = email
+
+    def reporting(self):
+        if self.email is not None:
+            self._send_mail()
+
+        # self.save_to_s3()
+        # self.append_to_dynamodb()
+
+    def save_to_s3(self):
+        pass
+
+    def append_to_dynamodb(self):
+        self
+
+    def _send_mail(self):
+        email(self.email, self.score_risk)
+
 
     @abc.abstractmethod
     def calculate_framingham(self):
@@ -49,5 +67,13 @@ class AbsPatient(metaclass=abc.ABCMeta):
         return self._total_cholesterol
 
     @property
+    def smoker(self):
+        return self._smoker
+
+    @property
     def score_risk(self):
         return self._score_risk
+
+    @property
+    def email(self):
+        return self._email

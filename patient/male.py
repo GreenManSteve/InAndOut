@@ -6,8 +6,11 @@ class Male(AbsPatient):
     def calculate_framingham(self):
         self._score_age()
         self._score_total_cholesterol()
-
-        return self._score
+        self._score_smoker()
+        self._score_hdl_cholesterol()
+        self._score_systolic_blood_pressure()
+        self.reporting()
+        return self.score_risk
 
     def _score_age(self):
         my_age = {(range(20, 34)): -9,
@@ -27,23 +30,18 @@ class Male(AbsPatient):
     def _score_total_cholesterol(self):
         age = self.age
         total_cholesterol = self.total_cholesterol
-
-        if 20 <= age <= 39:
-            if 160 <= total_cholesterol <= 199:
-                self._score += 4
-            elif 200 <= total_cholesterol <= 239:
-                self._score += 7
-            elif 240 <= total_cholesterol <= 279:
-                self._score += 9
+        self._score += 9
 
     def _score_smoker(self):
-        pass
+        smoker = self.smoker
+        if smoker:
+            self._score += 9
 
     def _score_hdl_cholesterol(self):
-        pass
+        self._score += 2
 
     def _score_systolic_blood_pressure(self):
-        pass
+        self._score += 3
 
     def _score_risk(self):
         return self._score

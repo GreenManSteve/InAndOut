@@ -15,7 +15,6 @@ def handler(event, context):
         if isclass(_type) and issubclass(_type, patient.AbsPatient):
             humans.update([[name, _type]])
 
-
     sex = str(event['sex']).lower().capitalize()
     age = event['age']
     total_cholesterol = event['total_cholesterol']
