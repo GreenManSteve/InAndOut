@@ -1,6 +1,6 @@
 import unittest
 import index
-from scripts.product import Product
+from patient.product import Product
 
 
 class TestHandlerCase(unittest.TestCase):
