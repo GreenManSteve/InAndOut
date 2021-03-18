@@ -45,7 +45,7 @@ class AbsPatient(metaclass=abc.ABCMeta):
                 'pk': {'S': '{0}'.format(date_stamp)},
                 'sk': {'S': '{0}'.format(class_name)},
                 'age': {'S': '{0}'.format(age)},
-                'percentage': {'S': '{0}%'.format(percentage)},
+                'percentage': {'M': '{0}%'.format(percentage)},
             }
         )
         return response
