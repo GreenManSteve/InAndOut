@@ -1,9 +1,11 @@
 import abc
 from .email import Email as email
-import random
+dynamodb = boto3.client('dynamodb')
+import datetime
 
 class AbsPatient(metaclass=abc.ABCMeta):
     _score = 0
+    _total = 0
 
     def __init__(self, age, total_cholesterol, smoker, hdl_cholesterol, systolic_blood_pressure):
         self._age = age
@@ -23,14 +25,42 @@ class AbsPatient(metaclass=abc.ABCMeta):
 
     def reporting(self):
         # self.save_to_s3()
-        # self.append_to_dynamodb()
+        self.append_to_dynamodb()
         pass
 
     def save_to_s3(self):
         pass
 
     def append_to_dynamodb(self):
-        self
+        date_stamp = datetime.datetime.now()
+        class_name = self.name
+        age = self.age
+        percentage = self.percentage
+
+        table = dynamodb.Table('FramScores')
+        response = table.put_item(
+            item={
+                'pk': {'S': '{0}'.format(date_stamp)},
+                'sk': {'S': '{0}'.format(class_name)},
+                'age': {'S': '{0}'.format(age)},
+                'percentage': {'S': '{0}%'.format(percentage)},
+            }
+        )
+        return response
+
+
+        table = dynamodb.Table('Movies')
+        response = table.put_item(
+            Item={
+                'year': year,
+                'title': title,
+                'info': {
+                    'plot': plot,
+                    'rating': rating
+                }
+            }
+        )
+        return response
 
     def _send_mail(self):
         email(self.email, self.score_risk)
@@ -78,24 +108,26 @@ class AbsPatient(metaclass=abc.ABCMeta):
 
     @property
     def score_risk(self):
-        risk = random.randint(0, 17)
+        risk = self.percentage
 
-        risk_percentage = {(range(0)): "<1%",
-                           (range(1, 4)): "1%",
-                           (range(5, 6)): "2%",
-                           (range(7)): "3%",
-                           (range(8)): "4%",
-                           (range(9)): "5%",
-                           (range(10)): "6%",
-                           (range(11)): "8%",
-                           (range(12)): "10%",
-                           (range(13)): "12%",
-                           (range(14)): "16%",
-                           (range(15)): "20%",
-                           (range(16)): "25%",
-                           (range(17)): "over 30%"}
+        return "Your risk of developing cardiovascular " \
+               "disease in the next ten years is {val:.0f}%".format(val=risk)
 
-        for key, value in risk_percentage.items():
-            if risk in key:
-                return "Your risk of developing cardiovascular " \
-                       "disease in the next ten years is {}".format(value)
+    @property
+    def name(self):
+        return self.cls_name
+
+    @property
+    def score(self):
+        return self._score
+
+    @property
+    def total(self):
+        return self._total
+
+    @property
+    def percentage(self):
+        score = self.score
+        total = self.total
+        risk = (score / total) * 100
+        return risk
