@@ -2,7 +2,7 @@ import abc
 import boto3
 from .email import Email as email
 import datetime
-dynamodb = boto3.client('dynamodb')
+dynamodb = boto3.resource('dynamodb')
 
 
 class AbsPatient(metaclass=abc.ABCMeta):
