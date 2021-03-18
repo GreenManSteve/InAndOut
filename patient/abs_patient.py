@@ -1,7 +1,9 @@
 import abc
+import boto3
 from .email import Email as email
-dynamodb = boto3.client('dynamodb')
 import datetime
+dynamodb = boto3.client('dynamodb')
+
 
 class AbsPatient(metaclass=abc.ABCMeta):
     _score = 0
