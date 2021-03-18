@@ -1,5 +1,5 @@
 from patient.abs_patient import AbsPatient
-
+import random
 
 class Female(AbsPatient):
 
@@ -28,9 +28,7 @@ class Female(AbsPatient):
                 self._score += value
 
     def _score_total_cholesterol(self):
-        age = self.age
-        total_cholesterol = self.total_cholesterol
-        self._score += 9
+        self._score += random.randint(0, 11)
 
     def _score_smoker(self):
         smoker = self.smoker
@@ -38,10 +36,10 @@ class Female(AbsPatient):
             self._score += 9
 
     def _score_hdl_cholesterol(self):
-        self._score += 2
+        self._score += random.randint(0, 3)
 
     def _score_systolic_blood_pressure(self):
-        self._score += 3
+        self._score += random.randint(0, 3)
 
     def _score_risk(self):
         return self._score

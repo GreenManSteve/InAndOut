@@ -5,20 +5,26 @@ from .email import Email as email
 class AbsPatient(metaclass=abc.ABCMeta):
     _score = 0
 
-    def __init__(self, age, total_cholesterol, smoker, hdl_cholesterol, systolic_blood_pressure, email=None):
+    def __init__(self, age, total_cholesterol, smoker, hdl_cholesterol, systolic_blood_pressure):
         self._age = age
         self._total_cholesterol = total_cholesterol
         self._smoker = smoker
         self._hdl_cholesterol = hdl_cholesterol
         self._systolic_blood_pressure = systolic_blood_pressure
-        self._email = email
+
+    def calculate_framingham(self):
+        self._score_age()
+        self._score_total_cholesterol()
+        self._score_smoker()
+        self._score_hdl_cholesterol()
+        self._score_systolic_blood_pressure()
+        self.reporting()
+        return self.score_risk
 
     def reporting(self):
-        if self.email is not None:
-            self._send_mail()
-
         # self.save_to_s3()
         # self.append_to_dynamodb()
+        pass
 
     def save_to_s3(self):
         pass
@@ -72,8 +78,25 @@ class AbsPatient(metaclass=abc.ABCMeta):
 
     @property
     def score_risk(self):
-        return self._score
-
-    @property
-    def email(self):
-        return self._email
+        risk = self._score
+        risk_percentage = {0: "<1%",
+                           (range(1, 4)): "1%",
+                           (range(5, 6)): "2%",
+                           7: "3%",
+                           8: "4%",
+                           9: "5%",
+                           10: "6%",
+                           11: "8%",
+                           12: "10%",
+                           13: "12%",
+                           14: "16%",
+                           15: "20%",
+                           16: "25%",
+                           17: "over 30%"}
+        your_risk = risk_percentage.get(risk)
+        if your_risk is None:
+            return "Your risk or developing cardiovascular " \
+                   "disease within ten years is assessed as NO RISK"
+        else:
+            return "Your risk or developing cardiovascular " \
+                   "disease within ten years is {}".form(your_risk)

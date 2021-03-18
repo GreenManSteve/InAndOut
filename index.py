@@ -20,10 +20,9 @@ def handler(event, context):
     smoker = event['smoker']
     hdl_cholesterol = event['hdl_cholesterol']
     systolic_blood_pressure = event['systolic_blood_pressure']
-    email = event['email']
 
     if sex in humans:
-        human = humans[sex](age, total_cholesterol, smoker, hdl_cholesterol, systolic_blood_pressure, email)
+        human = humans[sex](age, total_cholesterol, smoker, hdl_cholesterol, systolic_blood_pressure)
         screening = Screening(human)
         result = screening.calculate_framingham()
     else:
