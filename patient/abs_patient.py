@@ -41,7 +41,7 @@ class AbsPatient(metaclass=abc.ABCMeta):
 
         table = dynamodb.Table('FramScores')
         response = table.put_item(
-            item={
+            Item={
                 'pk': {'S': '{0}'.format(date_stamp)},
                 'sk': {'S': '{0}'.format(class_name)},
                 'age': {'S': '{0}'.format(age)},
