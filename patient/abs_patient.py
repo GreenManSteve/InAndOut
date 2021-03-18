@@ -38,7 +38,7 @@ class AbsPatient(metaclass=abc.ABCMeta):
         class_name = self.name
         age = self.age
         percentage = self.percentage
-        # table
+
         table = dynamodb.Table('FramScores')
         response = table.put_item(
             Item={
