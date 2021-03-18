@@ -46,7 +46,7 @@ class Email(object):
                         'Data': SUBJECT,
                     },
                 },
-                Source="stevenattwell@hotmail.com",
+                Source="arn:aws:ses:eu-west-2:849843121008:identity/stevenattwell@hotmail.com",
                 # If you are not using a configuration set, comment or delete the
                 # following line
                 # ConfigurationSetName=CONFIGURATION_SET,
