@@ -1,7 +1,17 @@
 from patient.abs_patient import AbsPatient
 import random
 
+
 class Male(AbsPatient):
+
+    def calculate_framingham(self):
+        self._score_age()
+        self._score_total_cholesterol()
+        self._score_smoker()
+        self._score_hdl_cholesterol()
+        self._score_systolic_blood_pressure()
+        self.reporting()
+        return self.score_risk
 
     def _score_age(self):
         my_age = {(range(20, 34)): -9,
@@ -14,6 +24,7 @@ class Male(AbsPatient):
                   (range(65, 69)): 11,
                   (range(70, 74)): 12,
                   (range(75, 79)): 13}
+
         for key, value in my_age.items():
             if self.age in key:
                 self._score += value

@@ -1,6 +1,7 @@
 from patient.abs_patient import AbsPatient
 import random
 
+
 class Female(AbsPatient):
 
     def calculate_framingham(self):
@@ -23,6 +24,7 @@ class Female(AbsPatient):
                   (range(65, 69)): 11,
                   (range(70, 74)): 12,
                   (range(75, 79)): 13}
+
         for key, value in my_age.items():
             if self.age in key:
                 self._score += value

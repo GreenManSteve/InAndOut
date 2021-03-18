@@ -1,6 +1,6 @@
 import abc
 from .email import Email as email
-
+import random
 
 class AbsPatient(metaclass=abc.ABCMeta):
     _score = 0
@@ -78,25 +78,24 @@ class AbsPatient(metaclass=abc.ABCMeta):
 
     @property
     def score_risk(self):
-        risk = self._score
-        risk_percentage = {0: "<1%",
+        risk = random.randint(0, 17)
+
+        risk_percentage = {(range(0)): "<1%",
                            (range(1, 4)): "1%",
                            (range(5, 6)): "2%",
-                           7: "3%",
-                           8: "4%",
-                           9: "5%",
-                           10: "6%",
-                           11: "8%",
-                           12: "10%",
-                           13: "12%",
-                           14: "16%",
-                           15: "20%",
-                           16: "25%",
-                           17: "over 30%"}
-        your_risk = risk_percentage.get(risk)
-        if your_risk is None:
-            return "Your risk or developing cardiovascular " \
-                   "disease within ten years is assessed as NO RISK"
-        else:
-            return "Your risk or developing cardiovascular " \
-                   "disease within ten years is {}".form(your_risk)
+                           (range(7)): "3%",
+                           (range(8)): "4%",
+                           (range(9)): "5%",
+                           (range(10)): "6%",
+                           (range(11)): "8%",
+                           (range(12)): "10%",
+                           (range(13)): "12%",
+                           (range(14)): "16%",
+                           (range(15)): "20%",
+                           (range(16)): "25%",
+                           (range(17)): "over 30%"}
+
+        for key, value in risk_percentage.items():
+            if risk in key:
+                return "Your risk of developing cardiovascular " \
+                       "disease in the next ten years is {}".format(value)
